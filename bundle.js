@@ -1,0 +1,1 @@
+console.error("Error: Parsing file C:\\Users\\imigs\\Desktop\\YouPoop\\content-script.mjs: 'import' and 'export' may appear only with 'sourceType: module' (3:0)");
