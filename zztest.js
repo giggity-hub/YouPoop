@@ -1,1 +1,0 @@
-export const zahl = 12341234;

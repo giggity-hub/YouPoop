@@ -1,10 +1,36 @@
 // const farts = require('./farts-index.json')
-import fartFileNames from './farts-index.json'
+import fartFileNames from '../static/fart-urls.json'
 import uniqueRandomArray from 'unique-random-array';
 
 function randomInteger(min, max){
     return Math.floor(Math.random() * (max - min) ) + min;
 }
+
+
+// fartlayer
+// options
+// play
+// pause
+class Ass{
+    constructor(){
+        let src = 'asdf'
+        this.fart = new Audio(src)
+        
+    }
+    _fart(){
+
+    }
+    start(){
+        this.fart.play()
+        // get random fart
+        // play
+        // onEnd play new fart
+    }
+    stop(){
+        // variable setzen
+    }
+}
+
 
 class FartBox{
     constructor(){
