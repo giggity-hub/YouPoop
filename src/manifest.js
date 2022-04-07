@@ -1,4 +1,4 @@
-{
+const options = {
     "name": "YouPoop",
     "description": "Support Creators without buying shit",
     "version": "1.0",
@@ -14,3 +14,5 @@
         }
     ]
 }
+
+module.exports = options
