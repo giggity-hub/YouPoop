@@ -3,41 +3,28 @@
 import $ from 'jquery';
 import FartBox from './fartbox';
 
-
 const fartBox = new FartBox();
 
-let target = document.querySelector('.ytp-ad-module');
-const $video = document.querySelector('.html5-main-video');
-
-console.log("content script ran");
-
-
-function activatePoop(){
-    fartBox.play()
-    console.log("poop activated");
-}
-
-function deactivatePoop(){
-    fartBox.pause();
-    console.log("poop deactivated");
-}
-
 function updatePoopPlayer(){
+    // an ad is playing only if the ytp-ad-player-overlay exists
     const ytpAdPlayerOverlay = document.querySelector('.ytp-ad-player-overlay')
-
-    if (ytpAdPlayerOverlay && !fartBox.isFarting) {
+    
+    if (ytpAdPlayerOverlay) {
         fartBox.play()
-    }else if (!ytpAdPlayerOverlay && fartBox.isFarting){
+    }else if (!ytpAdPlayerOverlay){
         fartBox.pause();
     }
 }
 
+// the ytp-ad-module is persistent but may not exist initially
+let target = document.querySelector('.ytp-ad-module');
 const observer = new MutationObserver(updatePoopPlayer)
 
 if (target) {
     observer.observe(target, {childList: true})
     updatePoopPlayer()
 }else{
+    // listen for navigations until the user navigates to a video which will add the ytp-ad-module node
     function listener(){
         console.log("navigated");
         let target = document.querySelector('.ytp-ad-module');
@@ -51,14 +38,6 @@ if (target) {
 }
 
 
-// document.addEventListener('yt-navigate-finish', function(){
-//     let target = document.querySelector('.ytp-ad-module');
-//     const $video = document.querySelector('.html5-main-video');
-
-//     if (target){
-//         observer.observe(target, {childList: true})
-//     }
-// })
 
 
 
@@ -66,13 +45,13 @@ const $startBtn = $('<button/>', {text: "start", css: {
     zIndex: 10000,
     position: 'relative'
 }})
-$startBtn.on('click', activatePoop)
+$startBtn.on('click', fartBox.play)
 $('body').prepend($startBtn)
 
 const $stopBtn = $('<button/>', {text: "stop", css: {
     zIndex: 10000,
     position: 'relative'
 }})
-$stopBtn.on('click', deactivatePoop)
+$stopBtn.on('click', fartBox.pause)
 $('body').prepend($stopBtn)
 
