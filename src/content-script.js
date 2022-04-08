@@ -3,7 +3,7 @@
 import $ from 'jquery';
 import FartBox from './fartbox';
 
-const fartBox = new FartBox();
+const fartBox = new FartBox(5);
 
 function updatePoopPlayer(){
     // an ad is playing only if the ytp-ad-player-overlay exists
@@ -19,6 +19,15 @@ function updatePoopPlayer(){
 // the ytp-ad-module is persistent but may not exist initially
 let target = document.querySelector('.ytp-ad-module');
 const observer = new MutationObserver(updatePoopPlayer)
+
+const $mainVideo = document.querySelector('.html5-main-video')
+
+$mainVideo.onvolumechange = (event)=>{
+    const {volume, muted} = event.target
+    fartBox.volume = muted ? 0 : volume;
+    console.log(volume, muted);
+}
+
 
 if (target) {
     observer.observe(target, {childList: true})
