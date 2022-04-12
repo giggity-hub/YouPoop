@@ -5,46 +5,68 @@ import FartBox from './fartbox';
 
 const fartBox = new FartBox(5);
 
-function updatePoopPlayer(){
+
+function adOverlayExists(){
     // an ad is playing only if the ytp-ad-player-overlay exists
     const ytpAdPlayerOverlay = document.querySelector('.ytp-ad-player-overlay')
-    
-    if (ytpAdPlayerOverlay) {
+    return Boolean(ytpAdPlayerOverlay)
+}
+
+const adModuleObserver = new MutationObserver(()=>{
+    if (adOverlayExists()) {
         fartBox.play()
-    }else if (!ytpAdPlayerOverlay){
+    }else{
         fartBox.pause();
     }
+})
+
+function waitForNavigation(pathname, callback){
+    if (window.location.pathname === pathname) {
+        callback()
+    }else{
+        const listener = () => {
+            if(window.location.pathname === pathname){
+                callback()
+                document.removeEventListener('yt-navigate-finish', listener)
+            }
+        }
+        document.addEventListener('yt-navigate-finish', soos)
+    }
 }
 
-// the ytp-ad-module is persistent but may not exist initially
-let target = document.querySelector('.ytp-ad-module');
-const observer = new MutationObserver(updatePoopPlayer)
+waitForNavigation('/watch', ()=>{
+    // Observe ad Module 
+    const $adModule = document.querySelector('.ytp-ad-module');
+    adModuleObserver.observe($adModule, {childList: true})
 
-const $mainVideo = document.querySelector('.html5-main-video')
+    // add Main Video Eventlisteners
+    const $mainVideo = document.querySelector('.html5-main-video')
 
-$mainVideo.onvolumechange = (event)=>{
-    const {volume, muted} = event.target
-    fartBox.volume = muted ? 0 : volume;
-    console.log(volume, muted);
-}
-
-
-if (target) {
-    observer.observe(target, {childList: true})
-    updatePoopPlayer()
-}else{
-    // listen for navigations until the user navigates to a video which will add the ytp-ad-module node
-    function listener(){
-        console.log("navigated");
-        let target = document.querySelector('.ytp-ad-module');
-
-        if (target){
-            observer.observe(target, {childList: true})
-            document.removeEventListener('yt-navigate-finish', listener)
+    $mainVideo.onvolumechange = (event)=>{
+        const {volume, muted} = event.target
+        fartBox.volume = muted ? 0 : volume;
+        console.log(volume, muted);
+    }
+    
+    $mainVideo.onpause = (event)=>{
+        console.log('paused shit');
+        fartBox.pause();
+    }
+    
+    $mainVideo.onplay = (event)=>{
+        console.log('resumed shit');
+        if (adOverlayExists()) {
+            fartBox.play()
         }
     }
-    document.addEventListener('yt-navigate-finish', listener)
-}
+
+})
+
+
+
+
+
+
 
 
 
