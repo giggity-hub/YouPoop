@@ -5,7 +5,6 @@ import FartBox from './fartbox';
 
 const fartBox = new FartBox(5);
 
-
 function adOverlayExists(){
     // an ad is playing only if the ytp-ad-player-overlay exists
     const ytpAdPlayerOverlay = document.querySelector('.ytp-ad-player-overlay')
@@ -20,24 +19,24 @@ const adModuleObserver = new MutationObserver(()=>{
     }
 })
 
+// callback must return boolean which determines if event listener is removed
 function waitForNavigation(pathname, callback){
-    if (window.location.pathname === pathname) {
-        callback()
-    }else{
+
         const listener = () => {
             if(window.location.pathname === pathname){
-                callback()
-                document.removeEventListener('yt-navigate-finish', listener)
+                let removeEventListener = callback();
+                if (removeEventListener) {
+                    document.removeEventListener('yt-navigate-finish', listener);
+                }
             }
         }
-        document.addEventListener('yt-navigate-finish', soos)
-    }
+        document.addEventListener('yt-navigate-finish', listener);
+        listener();
 }
 
+// The user must navigate to /watch once for the video player and ad-module nodes to be inserted
 waitForNavigation('/watch', ()=>{
     // Observe ad Module 
-    const $adModule = document.querySelector('.ytp-ad-module');
-    adModuleObserver.observe($adModule, {childList: true})
 
     // add Main Video Eventlisteners
     const $mainVideo = document.querySelector('.html5-main-video')
@@ -60,14 +59,26 @@ waitForNavigation('/watch', ()=>{
         }
     }
 
+    const $videoPlayer = document.querySelector('.html5-video-player');
+    console.log('videoPlayer', $videoPlayer);
+    const $fartOverlay = document.createElement('div')
+    $fartOverlay.classList.add('fart-overlay')
+    $videoPlayer.appendChild($fartOverlay)
+
+    // stop listening
+    return true;
+    // insert fart overlay
+
 })
 
-
-
-
-
-
-
+waitForNavigation('/watch', ()=>{
+    const $adModule = document.querySelector('.ytp-ad-module');
+    if ($adModule) {
+        adModuleObserver.observe($adModule, {childList: true});
+        return true;
+    }
+    return false;
+})
 
 
 

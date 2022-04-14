@@ -5,7 +5,8 @@ const options = {
     "manifest_version": 3,
     "content_scripts": [{
         "matches": ["https://www.youtube.com/*"],
-        "js": ["content-script.js"]
+        "js": ["content-script.js"],
+        "css": ["css/fart-overlay.css"]
     }],
     "web_accessible_resources": [
         {
