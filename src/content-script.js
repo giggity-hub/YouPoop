@@ -2,8 +2,18 @@
 // const $ = require('jquery');
 import $ from 'jquery';
 import FartBox from './fartbox';
+import { WebAccessibleResourcesExplorer } from './lib/dir-tree-parser';
+import dirTree from '../static/dir-tree.json'
 
-const fartBox = new FartBox(5);
+
+const resources = new WebAccessibleResourcesExplorer(dirTree)
+// console.log(resources.list('farts/audio'));
+
+
+const fartBox = new FartBox(
+    resources.list('farts/audio'),
+    5
+);
 
 function adOverlayExists(){
     // an ad is playing only if the ytp-ad-player-overlay exists

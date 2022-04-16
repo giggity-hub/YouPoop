@@ -1,11 +1,19 @@
 // const farts = require('./farts-index.json')
 import fartFileNames from '../static/fart-urls.json'
 import uniqueRandomArray from 'unique-random-array';
+// import staticTree from '../static/dir-tree.json';
+// import { TreeParser } from './lib/dir-tree-parser';
 
-const fartURLs = fartFileNames.map((file)=>{
-    console.log(file);
-    return chrome.runtime.getURL(file)
-})
+// const tree = new TreeParser(staticTree)
+
+
+// resources.list farts
+// const fartAudioURLs = 
+
+
+// const fartURLs = fartFileNames.map((file)=>{
+//     return chrome.runtime.getURL(file)
+// })
 
 class Ass{
     constructor(src){
@@ -35,14 +43,14 @@ class Ass{
     }
 }
 
+
 class FartBox{
-    constructor(assCount){
+    constructor(src, assCount=1){
         this.asses = []
         for (let i = 0; i < assCount; i++) {
-            let ass = new Ass(fartURLs);
+            let ass = new Ass(src);
             this.asses.push(ass)
         }
-        this.ass = new Ass(fartURLs)
     }
     play = ()=>{
         for (let ass of this.asses){

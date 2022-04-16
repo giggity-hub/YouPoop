@@ -1,0 +1,85 @@
+{
+  "path": "./static",
+  "name": "static",
+  "children": [
+    {
+      "path": "static\\css",
+      "name": "css",
+      "children": [
+        {
+          "path": "static\\css\\fart-overlay.css",
+          "name": "fart-overlay.css"
+        }
+      ]
+    },
+    {
+      "path": "static\\dir-tree.json",
+      "name": "dir-tree.json"
+    },
+    {
+      "path": "static\\fart-urls.json",
+      "name": "fart-urls.json"
+    },
+    {
+      "path": "static\\farts",
+      "name": "farts",
+      "children": [
+        {
+          "path": "static\\farts\\audio",
+          "name": "audio",
+          "children": [
+            {
+              "path": "static\\farts\\audio\\fart-01.mp3",
+              "name": "fart-01.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-02.mp3",
+              "name": "fart-02.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-03.mp3",
+              "name": "fart-03.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-04.mp3",
+              "name": "fart-04.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-05.mp3",
+              "name": "fart-05.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-06.mp3",
+              "name": "fart-06.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-07.mp3",
+              "name": "fart-07.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-08.mp3",
+              "name": "fart-08.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-squeak-01.mp3",
+              "name": "fart-squeak-01.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-squeak-02.mp3",
+              "name": "fart-squeak-02.mp3"
+            },
+            {
+              "path": "static\\farts\\audio\\fart-squeak-03.mp3",
+              "name": "fart-squeak-03.mp3"
+            }
+          ]
+        },
+        {
+          "path": "static\\farts\\gifs",
+          "name": "gifs",
+          "children": []
+        }
+      ]
+    }
+  ]
+}

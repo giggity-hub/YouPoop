@@ -5,13 +5,15 @@
   "main": "bundle.js",
   "scripts": {
     "dev": "webpack watch --mode=development",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "static-tree": "npx directory-tree --path ./static --output ./static/dir-tree.json --pretty"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "copy-webpack-plugin": "^10.2.4",
+    "directory-tree": "^3.2.2",
     "generate-json-from-js-webpack-plugin": "^0.1.1",
     "howler": "^2.2.3",
     "jquery": "^3.6.0",
