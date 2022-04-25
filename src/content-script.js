@@ -44,6 +44,9 @@ function waitForNavigation(pathname, callback){
         listener();
 }
 
+
+
+
 // The user must navigate to /watch once for the video player and ad-module nodes to be inserted
 waitForNavigation('/watch', ()=>{
     // Observe ad Module 
@@ -70,7 +73,7 @@ waitForNavigation('/watch', ()=>{
     }
 
     const $videoPlayer = document.querySelector('.html5-video-player');
-    console.log('videoPlayer', $videoPlayer);
+    console.log('videoPlayer', $mainVideo);
     const $fartOverlay = document.createElement('div')
     $fartOverlay.classList.add('fart-overlay')
     $videoPlayer.appendChild($fartOverlay)
@@ -91,6 +94,10 @@ waitForNavigation('/watch', ()=>{
 })
 
 
+// stop farting when navigating
+document.addEventListener('.yt-navigate-finish', function(){
+    fartBox.pause();
+})
 
 
 const $startBtn = $('<button/>', {text: "start", css: {
