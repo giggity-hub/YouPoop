@@ -13,7 +13,10 @@ const options = {
             "resources": ["/farts/*"],
             "matches": ["https://www.youtube.com/*"]
         }
-    ]
+    ],
+    "action":{
+        "default_popup": "popup/index.html"
+    }
 }
 
 module.exports = options

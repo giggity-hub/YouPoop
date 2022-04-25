@@ -6,14 +6,13 @@ import uniqueRandomArray from 'unique-random-array';
 
 // const tree = new TreeParser(staticTree)
 
-
 // resources.list farts
 // const fartAudioURLs = 
-
 
 // const fartURLs = fartFileNames.map((file)=>{
 //     return chrome.runtime.getURL(file)
 // })
+
 
 class Ass{
     constructor(src){
@@ -47,22 +46,51 @@ class Ass{
 class FartBox{
     constructor(src, assCount=1){
         this.asses = []
+        this.assCount = assCount;
+        this.src = src;
+        this.isPlaying = false
+
         for (let i = 0; i < assCount; i++) {
             let ass = new Ass(src);
             this.asses.push(ass)
         }
     }
+    setAssCount = (assCount) =>{
+        console.log(assCount);
+        // decrement asses
+        while(assCount < this.assCount){
+            let ass = this.asses.pop()
+            ass.stop();
+            this.assCount--
+            console.log(assCount, this.assCount, ass);
+        }
+
+        // increment asses
+        while(assCount > this.assCount){
+            let ass = new Ass(this.src)
+            this.asses.push(ass)
+            if (this.isPlaying) {
+                ass.play()
+            }
+            this.assCount++
+        }
+        console.log('ass count adjusted');
+
+    }
     play = ()=>{
+        this.isPlaying = true;
         for (let ass of this.asses){
             ass.play()
         }
     }
     pause = ()=>{
+        this.isPlaying = false;
         for (let ass of this.asses){
             ass.pause()
         }
     }
     stop = () =>{
+        this.isPlaying = false;
         for (let ass of this.asses){
             ass.stop()
         }

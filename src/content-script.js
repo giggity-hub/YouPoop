@@ -54,6 +54,7 @@ waitForNavigation('/watch', ()=>{
     // add Main Video Eventlisteners
     const $mainVideo = document.querySelector('.html5-main-video')
 
+
     $mainVideo.onvolumechange = (event)=>{
         const {volume, muted} = event.target
         fartBox.volume = muted ? 0 : volume;
@@ -113,4 +114,21 @@ const $stopBtn = $('<button/>', {text: "stop", css: {
 }})
 $stopBtn.on('click', fartBox.pause)
 $('body').prepend($stopBtn)
+
+
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    // 2. A page requested user data, respond with a copy of `user`
+    console.log(message);
+    if (message.action === 'SET_ASS_COUNT') {
+        fartBox.setAssCount(message.assCount);
+    }
+    
+    // console.log(message);
+    sendResponse("du huansoooooooooooooooooohn")
+    // if (message === 'get-user-data') {
+    //   sendResponse(user);
+    // }
+  });
+
 
