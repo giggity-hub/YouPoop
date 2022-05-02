@@ -75,6 +75,7 @@ class FartBox{
             this.assCount++
         }
         console.log('ass count adjusted');
+        chrome.storage.local.set({assCount});
 
     }
     play = ()=>{

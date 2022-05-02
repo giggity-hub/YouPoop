@@ -4,6 +4,7 @@ import $ from 'jquery';
 import FartBox from './fartbox';
 import { WebAccessibleResourcesExplorer } from './lib/dir-tree-parser';
 import dirTree from '../static/dir-tree.json'
+import waitForElm from './lib/wait-for-elem';
 
 
 const resources = new WebAccessibleResourcesExplorer(dirTree)
@@ -29,32 +30,8 @@ const adModuleObserver = new MutationObserver(()=>{
     }
 })
 
-// callback must return boolean which determines if event listener is removed
-function waitForNavigation(pathname, callback){
 
-        const listener = () => {
-            if(window.location.pathname === pathname){
-                let removeEventListener = callback();
-                if (removeEventListener) {
-                    document.removeEventListener('yt-navigate-finish', listener);
-                }
-            }
-        }
-        document.addEventListener('yt-navigate-finish', listener);
-        listener();
-}
-
-
-
-
-// The user must navigate to /watch once for the video player and ad-module nodes to be inserted
-waitForNavigation('/watch', ()=>{
-    // Observe ad Module 
-
-    // add Main Video Eventlisteners
-    const $mainVideo = document.querySelector('.html5-main-video')
-
-
+waitForElm('.html5-main-video').then($mainVideo =>{
     $mainVideo.onvolumechange = (event)=>{
         const {volume, muted} = event.target
         fartBox.volume = muted ? 0 : volume;
@@ -78,21 +55,13 @@ waitForNavigation('/watch', ()=>{
     const $fartOverlay = document.createElement('div')
     $fartOverlay.classList.add('fart-overlay')
     $videoPlayer.appendChild($fartOverlay)
-
-    // stop listening
-    return true;
-    // insert fart overlay
-
 })
 
-waitForNavigation('/watch', ()=>{
-    const $adModule = document.querySelector('.ytp-ad-module');
-    if ($adModule) {
-        adModuleObserver.observe($adModule, {childList: true});
-        return true;
-    }
-    return false;
+waitForElm('.ytp-ad-module').then($adModule =>{
+    adModuleObserver.observe($adModule, {childList: true});
 })
+
+
 
 
 // stop farting when navigating
